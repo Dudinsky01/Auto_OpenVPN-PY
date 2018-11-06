@@ -10,4 +10,4 @@ OpenSSL is required to generate certificates and OpenVPN is required to create k
 
 Make sure OpenVPN and OpenSSL are both installed before using this script.
 
-To install needed python packages, RUN '''pip install -r Requirements.txt'''
+To install needed python packages, RUN ```pip install -r Requirements.txt```
