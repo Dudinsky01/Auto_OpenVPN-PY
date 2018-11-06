@@ -1,8 +1,8 @@
 # Auto_OpenVPN
 
-Auto_OpenVPN a pour but de vous aider à automatiser le processus de creation des fichiers de configuration OpenVPN.
+Auto_OpenVPN a pour but de vous aider à automatiser le processus de création des fichiers de configuration OpenVPN.
 
-Vous pouvez utilisez le Template pré-remplis ou crééz le votre en fonction de vos besoin.
+Vous pouvez utilisez le Template pré-remplis ou créez votre propre template qui répondra mieux a vos besoins.
 
 # Installation
 
