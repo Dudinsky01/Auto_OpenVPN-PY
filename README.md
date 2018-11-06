@@ -1,4 +1,4 @@
-# Auto_OpenVPN-PY
+# Auto_OpenVPN
 
 Auto_OpenVPN is made to help you automate the process of creating OpenVpn configurations.
 
