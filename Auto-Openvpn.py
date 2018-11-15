@@ -1,6 +1,5 @@
 import os
 import sys
-import tarfile
 import subprocess
 from OpenSSL import crypto, SSL
 
