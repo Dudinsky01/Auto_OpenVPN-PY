@@ -56,6 +56,9 @@ def config_creator():
 
     return server_ca, server_cert, client_ca, client_cert
 
+#   a simple run command use for the gen_dh_tlsauth()
+def run(cmd):
+    subprocess.Popen(cmd).wait()
 
 #   generates a key for the CA and Certs of generate_ca() and generate_certificate()
 def create_key(size):
@@ -167,3 +170,41 @@ def generate_certificate(certificate_dict, ca, cakey, name):
 
     cert.sign(cakey, certificate_dict['hashalgorithm'])
     return req, cert, key
+
+#   build the CA certificate
+def build_ca(server_ca, name):
+    if os.path.isfile(server_ca['cert_filename']) and os.path.isfile(server_ca['cert_key']):
+        ca_cert = crypto.load_certificate(
+            crypto.FILETYPE_PEM, open(server_ca['cert_filename']).read())
+        ca_key = crypto.load_privatekey(
+            crypto.FILETYPE_PEM, open(server_ca['cert_key']).read())
+    else:
+        ca_cert, ca_key = generate_ca(server_ca)
+        open(server_ca['cert_filename'], "w").write(
+            crypto.dump_certificate(crypto.FILETYPE_PEM, ca_cert))
+        open(server_ca['cert_key'], "w").write(
+            crypto.dump_privatekey(crypto.FILETYPE_PEM, ca_key))
+    return ca_cert, ca_key
+
+#   build the Cert certificate
+def build_cert(config_certificate, ca_cert, ca_key, name):
+    cert_req, cert_cert, cert_key = generate_certificate(
+        config_certificate, ca_cert, ca_key, name)
+    open(config_certificate['cert_filename'], "w").write(
+        crypto.dump_certificate(crypto.FILETYPE_PEM, cert_cert))
+    open(config_certificate['cert_key'], "w").write(
+        crypto.dump_privatekey(crypto.FILETYPE_PEM, cert_key))
+    return cert_cert, cert_key
+
+#   Generates a Diffie-Hellman key and a TLS key
+def gen_dh_tlsauth():
+    run(['openvpn', '--genkey', '--secret', 'ta.key'])
+
+    run(['openssl', 'dhparam', '-out', 'dh' +
+         str(DH_SIZE)+'.pem', str(DH_SIZE)])
+
+#   Create Only one file with all the informations in
+def Create_ovpn(filename):
+    with open(filename) as f:
+        data = f.read()
+    return (data)
