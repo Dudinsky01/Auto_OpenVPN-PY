@@ -6,6 +6,51 @@ from OpenSSL import crypto, SSL
 #   Change this if you want to use a different size for DH_PARAMS
 DH_SIZE = 2048
 
+#   Create a .conf file for OpenVPN
+#   Change [address] and [port] to fit your needs 
+def config_file_generator():
+
+    server_conf_file = {}
+    client_conf_file = {}
+
+    server_conf_file['address'] = ("remote 10.0.2.1\n")
+    server_conf_file['port'] = ("port 1194\n")
+    server_conf_file['proto'] = ("proto udp\n")
+    server_conf_file['tun'] = ("dev tun\n")
+    server_conf_file['float'] = ("float\n")
+    server_conf_file['ifconfig'] = ("ifconfig 194.0.0.1 194.0.0.2\n")
+    server_conf_file['route'] = ("route 10.0.2.0 255.255.255.0\n")
+    server_conf_file['security'] = ("script-security 1\n")
+    server_conf_file['keepalive'] = ("keepalive 10 120\n")
+    server_conf_file['cipher'] = ("cipher AES-256-CBC\n")
+    server_conf_file['tls'] = ("tls-server\n")
+    server_conf_file['persist-key'] = ("persist-key\n")
+    server_conf_file['persist-tun'] = ("persist-tun\n")
+    server_conf_file['persist-remote'] = ("persist-remote-ip\n")
+    server_conf_file['persist-local'] = ("persist-local-ip\n")
+    server_conf_file['user'] = ("user nobody\n")
+    server_conf_file['group'] = ("group nogroup\n")
+
+    client_conf_file['address'] = ("remote 10.0.1.1\n")
+    client_conf_file['port'] = ("port 1194\n")
+    client_conf_file['proto'] = ("proto udp\n")
+    client_conf_file['tun'] = ("dev tun\n")
+    client_conf_file['float'] = ("float\n")
+    client_conf_file['ifconfig'] = ("ifconfig 194.0.0.2 194.0.0.1\n")
+    client_conf_file['route'] = ("route 10.0.1.0 255.255.255.0\n")
+    client_conf_file['security'] = ("script-security 1\n")
+    client_conf_file['keepalive'] = ("keepalive 10 120\n")
+    client_conf_file['cipher'] = ("cipher AES-256-CBC\n")
+    client_conf_file['tls'] = ("tls-server\n")
+    client_conf_file['persist-key'] = ("persist-key\n")
+    client_conf_file['persist-tun'] = ("persist-tun\n")
+    client_conf_file['persist-remote'] = ("persist-remote-ip\n")
+    client_conf_file['persist-local'] = ("persist-local-ip\n")
+    client_conf_file['user'] = ("user nobody\n")
+    client_conf_file['group'] = ("group nogroup\n")
+
+    return server_conf_file, client_conf_file
+
 #   Create four dict with the values needed to create CA and certs
 def config_creator():
     server_ca = {}
