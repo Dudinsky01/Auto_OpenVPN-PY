@@ -252,3 +252,35 @@ def Create_ovpn(filename):
     with open(filename) as f:
         data = f.read()
     return (data)
+
+#   main function
+if __name__ == "__main__":
+
+#   Building the CA and cert configuration files
+    config_server_ca, config_server_cert, config_client_ca, config_client_cert = config_creator()
+
+#   Build the Server and Client CA
+    server_ca_cert, server_ca_key = build_ca(config_server_ca, 'Server')
+    client_ca_cert, client_ca_key = build_ca(config_client_ca, 'Client')
+    print("CA OK")
+
+#   Build the server and client certificate (signed by the above CAs)
+    build_cert(config_server_cert, server_ca_cert, server_ca_key, 'Server')
+    build_cert(config_client_cert, client_ca_cert, client_ca_key, 'Client')
+    print("CERT OK")
+
+#   Generate Diffie Hellman key and TLS key
+    gen_dh_tlsauth()
+    print("DH OK")
+
+    server_config_file, client_config_file = config_file_generator()
+
+#   Generate the server configuration file
+    with open('serverVPN.conf', 'w') as sc:
+        for value in server_config_file.values():
+            sc.write('{}'.format(value))
+
+#   Build the client configuration file
+    with open('clientVPN.conf', 'w') as cc:
+        for value in client_config_file.values():
+            cc.write('{}'.format(value))
