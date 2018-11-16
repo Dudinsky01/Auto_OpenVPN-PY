@@ -284,3 +284,46 @@ if __name__ == "__main__":
     with open('clientVPN.conf', 'w') as cc:
         for value in client_config_file.values():
             cc.write('{}'.format(value))
+
+            #   Gather all server files in one
+    server_conf = Create_ovpn("serverVPN.conf")
+    server_ca = Create_ovpn("server_ca.pem")
+    server_cert = Create_ovpn("server_cert.pem")
+    server_key = Create_ovpn("server_cert.key")
+    server_ta = Create_ovpn("ta.key")
+    server_dh = Create_ovpn("dh"+str(DH_SIZE)+".pem")
+
+#   Gather all client files in one
+    client_conf = Create_ovpn("clientVPN.conf")
+    client_ca = Create_ovpn("client_ca.pem")
+    client_cert = Create_ovpn("client_cert.pem")
+    client_key = Create_ovpn("client_cert.key")
+    client_ta = Create_ovpn("ta.key")
+
+#   Preparing the final server and client file
+    server_ovpn = "%s<ca>\n%s</ca>\n<cert>\n%s</cert>\n<key>\n%s</key>\n<dh>\n%s</dh>\n<tls-crypt>\n%s</tls-crypt>" % (
+        server_conf, client_ca, server_cert, server_key, server_dh, server_ta)
+    client_ovpn = "%s<ca>\n%s</ca>\n<cert>\n%s</cert>\n<key>\n%s</key>\n<tls-crypt>\n%s</tls-crypt>" % (
+        client_conf, server_ca, client_cert, client_key, server_ta)
+
+    # write server .ovpn file and client .ovpn file
+    f = open("server.ovpn", "w")
+    f.write(server_ovpn)
+    j = open("client.ovpn", "w")
+    j.write(client_ovpn)
+
+    # remove all files after .ovpn files created
+    os.remove("client_ca.key")
+    os.remove("client_ca.pem")
+    os.remove("client_cert.key")
+    os.remove("client_cert.pem")
+    os.remove("clientVPN.conf")
+    os.remove("dh"+str(DH_SIZE)+".pem")
+    os.remove("server_ca.key")
+    os.remove("server_ca.pem")
+    os.remove("server_cert.key")
+    os.remove("server_cert.pem")
+    os.remove("serverVPN.conf")
+    os.remove("ta.key")
+    print("OPENVPN SUCCESFULLY CONFIGURED")
+    sys.exit(0)
