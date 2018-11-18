@@ -30,6 +30,7 @@ def config_file_generator():
     server_conf_file['persist-local'] = ("persist-local-ip\n")
     server_conf_file['user'] = ("user nobody\n")
     server_conf_file['group'] = ("group nogroup\n")
+    server_conf_file['direction'] = ("key-direction 0\n")
 
     client_conf_file['address'] = ("remote 10.0.1.1\n")
     client_conf_file['port'] = ("port 1194\n")
@@ -41,13 +42,14 @@ def config_file_generator():
     client_conf_file['security'] = ("script-security 1\n")
     client_conf_file['keepalive'] = ("keepalive 10 120\n")
     client_conf_file['cipher'] = ("cipher AES-256-CBC\n")
-    client_conf_file['tls'] = ("tls-server\n")
+    client_conf_file['tls'] = ("tls-client\n")
     client_conf_file['persist-key'] = ("persist-key\n")
     client_conf_file['persist-tun'] = ("persist-tun\n")
     client_conf_file['persist-remote'] = ("persist-remote-ip\n")
     client_conf_file['persist-local'] = ("persist-local-ip\n")
     client_conf_file['user'] = ("user nobody\n")
     client_conf_file['group'] = ("group nogroup\n")
+    client_conf_file['direction'] = ("key-direction 1\n")
 
     return server_conf_file, client_conf_file
 
