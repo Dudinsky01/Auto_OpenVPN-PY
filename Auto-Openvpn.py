@@ -326,4 +326,20 @@ if __name__ == "__main__":
     os.remove("serverVPN.conf")
     os.remove("ta.key")
     print("OPENVPN SUCCESFULLY CONFIGURED")
+    
+     #   Ask user if they want to use scp to transfert clientfile
+    transfer = raw_input(
+        "do you want to transfer the clientfile to client via scp ? (yes/no)")
+
+    #   If yes then start scp to client
+    #   If no exit
+    if transfer == 'yes':
+        local_user = raw_input("Enter your local username : ")
+        yourip = raw_input("Enter your ip : ")
+        user = raw_input("Enter server username : ")
+        server = raw_input("Enter the server address : ")
+        os.system("scp" + " " + local_user + "@" + yourip + ":" +
+                  " " + "client.ovpn" + " " + user + "@" + server + ":")
+        if transfer == 'no':
+            sys.exit(0)
     sys.exit(0)
