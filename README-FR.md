@@ -11,3 +11,5 @@ OpenSSL est requis pour générer les certificats et OpenVPN est requis pour gé
 Soyez sûr que OpenVPN et OpenSSL sont installés avant d'utiliser ce script.
 
 Pour installer les paquets python qui sont nécessaire, Exécutez la commande suivante : ```pip install pyopenssl```
+
+OK PYTHON 2.7.X
