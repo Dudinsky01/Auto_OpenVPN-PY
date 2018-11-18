@@ -327,7 +327,7 @@ if __name__ == "__main__":
     os.remove("ta.key")
     print("OPENVPN SUCCESFULLY CONFIGURED")
     
-     #   Ask user if they want to use scp to transfert clientfile
+     #   Ask user if they want to use scp to transfer clientfile
     transfer = raw_input(
         "do you want to transfer the clientfile to client via scp ? (yes/no)")
 
