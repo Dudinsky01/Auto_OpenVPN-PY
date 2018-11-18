@@ -2,7 +2,7 @@
 
 Auto_OpenVPN a pour but de vous aider à automatiser le processus de création des fichiers de configuration OpenVPN.
 
-Vous pouvez utilisez le Template pré-remplis ou créez votre propre template qui répondra mieux a vos besoins.
+Vous pouvez utilisez la configuration pré-remplis ou créez votre propre configuration qui répondra mieux a vos besoins en modifiant les valeurs dans config_file_generator().
 
 # Installation
 
