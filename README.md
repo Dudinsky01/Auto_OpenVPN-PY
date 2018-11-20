@@ -1,8 +1,8 @@
 # Auto_OpenVPN
 
-Auto_OpenVPN is made to help you automate the process of creating OpenVpn configurations.
+Auto_OpenVPN is made to help you automate the process of creating OpenVPN configuration.
 
-You can use the pre-built configuration file or you can create your own configuration file if needed by changing values in config_file_generator().
+You can use the pre-built configuration file (Site-to-Site VPN) or you can create your own configuration file if needed by changing values in config_file_generator().
 
 # Installation
 
