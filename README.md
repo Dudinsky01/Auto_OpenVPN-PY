@@ -22,21 +22,22 @@ To install needed python packages, RUN ```pip install pyopenssl```
 
 2.  run the script.
 
-  It will create all the CA and Cert needed for OpenVPN, create the configuration file, generate a DH key and a tls key.
+    It will create all the CA and Cert needed for OpenVPN, create the configuration file, generate a DH key and a tls key.
 
-  At the end you will only have a serverVPN.ovpn and clientVPN.ovpn file.
+    At the end you will only have a serverVPN.ovpn and clientVPN.ovpn file.
 
 3.  The serverVPN.ovpn is your server file, so move this one on the concerned server in /etc/openvpn/.
 
 4.  The clientVPN.ovpn is your client file, so move this one on the concerned client in /etc/openvpn/.
 
-To start the VPN connection run both server and client file using ```openvpn serverVPN.ovpn``` or ```openvpn clientVON.ovpn```
+    To start the VPN connection run both server and client file using ```openvpn serverVPN.ovpn``` or ```openvpn clientVON.ovpn```
 
-If you want OpenVPN to start the connection at every launch use ```systemctl enable openvpn```
+    If you want OpenVPN to start the connection at every launch use ```systemctl enable openvpn```
 
-Enjoy !
+    Enjoy !
 
 # TESTED
 
 TESTED OK DEBIAN 9.X
+
 TESTED OK PYTHON 2.7.X
