@@ -315,13 +315,13 @@ if __name__ == "__main__":
     client_ovpn = "%s<ca>\n%s</ca>\n<cert>\n%s</cert>\n<key>\n%s</key>\n<tls-crypt>\n%s</tls-crypt>" % (
         client_conf, server_ca, client_cert, client_key, server_ta)
 
-    # write server.ovpn file and client.ovpn file
+#   write server.ovpn file and client.ovpn file
     f = open("server.ovpn", "w")
     f.write(server_ovpn)
     j = open("client.ovpn", "w")
     j.write(client_ovpn)
 
-    # remove all files after .ovpn files created
+#   remove all files after .ovpn files created
     os.remove("client_ca.key")
     os.remove("client_ca.pem")
     os.remove("client_cert.key")
@@ -336,12 +336,12 @@ if __name__ == "__main__":
     os.remove("ta.key")
     print("OPENVPN SUCCESFULLY CONFIGURED")
     
-     #   Ask user if they want to use scp to transfer clientfile
+#   Ask user if they want to use scp to transfer clientfile
     transfer = raw_input(
         "do you want to transfer the clientfile to client via scp ? (yes/no)")
 
-    #   If yes then start scp to client
-    #   If no exit
+#   If yes then start scp to client
+#   If no exit
     if transfer == 'yes':
         local_user = raw_input("Enter your local username : ")
         yourip = client_config_file['remote']
