@@ -13,43 +13,43 @@ def config_file_generator():
     server_conf_file = {}
     client_conf_file = {}
 
-    server_conf_file['address'] = ("remote 10.0.2.1\n")
-    server_conf_file['port'] = ("port 1194\n")
-    server_conf_file['proto'] = ("proto udp\n")
-    server_conf_file['tun'] = ("dev tun\n")
-    server_conf_file['float'] = ("float\n")
-    server_conf_file['ifconfig'] = ("ifconfig 194.0.0.1 194.0.0.2\n")
-    server_conf_file['route'] = ("route 10.0.2.0 255.255.255.0\n")
-    server_conf_file['security'] = ("script-security 1\n")
-    server_conf_file['keepalive'] = ("keepalive 10 120\n")
-    server_conf_file['cipher'] = ("cipher AES-256-CBC\n")
-    server_conf_file['tls'] = ("tls-server\n")
-    server_conf_file['persist-key'] = ("persist-key\n")
-    server_conf_file['persist-tun'] = ("persist-tun\n")
-    server_conf_file['persist-remote'] = ("persist-remote-ip\n")
-    server_conf_file['persist-local'] = ("persist-local-ip\n")
-    server_conf_file['user'] = ("user nobody\n")
-    server_conf_file['group'] = ("group nogroup\n")
-    server_conf_file['direction'] = ("key-direction 0\n")
+    server_conf_file['remote'] = ("10.0.2.1")
+    server_conf_file['port'] = ("1194")
+    server_conf_file['proto'] = ("udp")
+    server_conf_file['dev'] = ("tun\n")
+    server_conf_file['float'] = (" ")
+    server_conf_file['ifconfig'] = ("194.0.0.1 194.0.0.2")
+    server_conf_file['route'] = ("10.0.2.0 255.255.255.0")
+    server_conf_file['script-security'] = ("1")
+    server_conf_file['keepalive'] = ("10 120")
+    server_conf_file['cipher'] = ("AES-256-CBC")
+    server_conf_file['tls-server'] = (" ")
+    server_conf_file['persist-key'] = (" ")
+    server_conf_file['persist-tun'] = (" ")
+    server_conf_file['persist-remote-ip'] = (" ")
+    server_conf_file['persist-local-ip'] = (" ")
+    server_conf_file['user'] = ("nobody")
+    server_conf_file['group'] = ("nogroup")
+    server_conf_file['key-direction'] = ("0")
 
-    client_conf_file['address'] = ("remote 10.0.1.1\n")
-    client_conf_file['port'] = ("port 1194\n")
-    client_conf_file['proto'] = ("proto udp\n")
-    client_conf_file['tun'] = ("dev tun\n")
-    client_conf_file['float'] = ("float\n")
-    client_conf_file['ifconfig'] = ("ifconfig 194.0.0.2 194.0.0.1\n")
-    client_conf_file['route'] = ("route 10.0.1.0 255.255.255.0\n")
-    client_conf_file['security'] = ("script-security 1\n")
-    client_conf_file['keepalive'] = ("keepalive 10 120\n")
-    client_conf_file['cipher'] = ("cipher AES-256-CBC\n")
-    client_conf_file['tls'] = ("tls-client\n")
-    client_conf_file['persist-key'] = ("persist-key\n")
-    client_conf_file['persist-tun'] = ("persist-tun\n")
-    client_conf_file['persist-remote'] = ("persist-remote-ip\n")
-    client_conf_file['persist-local'] = ("persist-local-ip\n")
-    client_conf_file['user'] = ("user nobody\n")
-    client_conf_file['group'] = ("group nogroup\n")
-    client_conf_file['direction'] = ("key-direction 1\n")
+    client_conf_file['remote'] = ("10.0.1.1")
+    client_conf_file['port'] = ("1194")
+    client_conf_file['proto'] = ("udp")
+    client_conf_file['dev'] = ("tun")
+    client_conf_file['float'] = (" ")
+    client_conf_file['ifconfig'] = ("194.0.0.2 194.0.0.1")
+    client_conf_file['route'] = ("10.0.1.0 255.255.255.0")
+    client_conf_file['script-security'] = ("1")
+    client_conf_file['keepalive'] = ("10 120")
+    client_conf_file['cipher'] = ("AES-256-CBC")
+    client_conf_file['tls-client'] = (" ")
+    client_conf_file['persist-key'] = (" ")
+    client_conf_file['persist-tun'] = (" ")
+    client_conf_file['persist-remote-ip'] = (" ")
+    client_conf_file['persist-local-ip'] = (" ")
+    client_conf_file['user'] = ("nobody")
+    client_conf_file['group'] = ("nogroup")
+    client_conf_file['key-direction'] = ("1")
 
     return server_conf_file, client_conf_file
 
@@ -279,13 +279,13 @@ if __name__ == "__main__":
 
 #   Generate the server configuration file
     with open('serverVPN.conf', 'w') as sc:
-        for value in server_config_file.values():
-            sc.write('{}'.format(value))
+        for k, v in server_config_file.items():
+            sc.write('{}'.format(k) + ' ' + '{}'.format(v) + '\n')
 
 #   Build the client configuration file
     with open('clientVPN.conf', 'w') as cc:
-        for value in client_config_file.values():
-            cc.write('{}'.format(value))
+        for x, y in client_config_file.items():
+            cc.write('{}'.format(x) + ' ' + '{}'.format(y) + '\n')
 
             #   Gather all server files in one
     server_conf = Create_ovpn("serverVPN.conf")
