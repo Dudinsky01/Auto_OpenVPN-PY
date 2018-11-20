@@ -337,9 +337,9 @@ if __name__ == "__main__":
     #   If no exit
     if transfer == 'yes':
         local_user = raw_input("Enter your local username : ")
-        yourip = raw_input("Enter your ip : ")
+        yourip = client_config_file['remote']
         user = raw_input("Enter server username : ")
-        server = raw_input("Enter the server address : ")
+        server = server_config_file['remote']
         os.system("scp" + " " + local_user + "@" + yourip + ":" +
                   " " + "client.ovpn" + " " + user + "@" + server + ":")
         if transfer == 'no':
