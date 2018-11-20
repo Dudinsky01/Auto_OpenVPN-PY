@@ -30,7 +30,7 @@ To install needed python packages, RUN ```pip install pyopenssl```
 
 4.  The clientVPN.ovpn is your client file, so move this one on the concerned client in /etc/openvpn/.
 
-    To start the VPN connection run both server and client file using ```openvpn serverVPN.ovpn``` or ```openvpn clientVON.ovpn```
+    To start the VPN connection run both server and client file using ```openvpn serverVPN.ovpn``` or ```openvpn clientVPN.ovpn```
 
     If you want OpenVPN to start the connection at every launch use ```systemctl enable openvpn```
 
