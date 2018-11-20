@@ -6,7 +6,7 @@ from OpenSSL import crypto, SSL
 #   Change this if you want to use a different size for DH_PARAMS
 DH_SIZE = 2048
 
-#   Create a .conf file for OpenVPN
+#   Create a default .conf file for OpenVPN
 #   Change [address] and [port] to fit your needs 
 def config_file_generator():
 
@@ -53,7 +53,7 @@ def config_file_generator():
 
     return server_conf_file, client_conf_file
 
-#   Create four dict with the values needed to create CA and certs
+#   Create four dict who contains the values needed to create CA and certs
 def config_creator():
     server_ca = {}
     server_cert = {}
@@ -106,13 +106,13 @@ def config_creator():
 def run(cmd):
     subprocess.Popen(cmd).wait()
 
-#   generates a key for the CA and Certs of generate_ca() and generate_certificate()
+#   generates a key needed for the CA and Certs of generate_ca() and generate_certificate()
 def create_key(size):
     key = crypto.PKey()
     key.generate_key(crypto.TYPE_RSA, size)
     return key
 
-#   Generates a CA certificate
+#   Generates a CA certificate and fill it with the values contained in dict
 def generate_ca(ca_dict):
     ca = crypto.X509()
     ca.set_version(2)
@@ -155,13 +155,14 @@ def generate_ca(ca_dict):
     ca.sign(key, ca_dict['hashalgorithm'])
     return ca, key
 
-#   generates a Cert certificate
+#   generates a Cert certificate and fill it with the values contained in dict.
+#   Arguments are filled in build_cert()
 def generate_certificate(certificate_dict, ca, cakey, name):
 
-#   Generate the private key
+#   Generate the private key the size contained in dict
     key = create_key(certificate_dict['keyfilesize'])
 
-#   Generate the certificate request
+#   Generate the certificate request and fill informations with dict
     req = crypto.X509Req()
     req_subj = req.get_subject()
     if 'commonName' in certificate_dict:
@@ -190,11 +191,13 @@ def generate_certificate(certificate_dict, ca, cakey, name):
     cert.set_pubkey(req.get_pubkey())
     cert.set_issuer(ca.get_subject())
 
+#   Set valid time for the certificate
     if 'validfrom' in certificate_dict:
         cert.set_notBefore(certificate_dict['validfrom'])
     if 'validto' in certificate_dict:
         cert.set_notAfter(certificate_dict['validto'])
 
+#   Define cert type depending if it is for client or server.
     if name == 'client':
         usage = 'clientAuth'
         nscerttype = 'client'
@@ -217,6 +220,7 @@ def generate_certificate(certificate_dict, ca, cakey, name):
     cert.sign(cakey, certificate_dict['hashalgorithm'])
     return req, cert, key
 
+#   First check if file already exist. If not, create them.
 #   build the CA certificate
 def build_ca(server_ca, name):
     if os.path.isfile(server_ca['cert_filename']) and os.path.isfile(server_ca['cert_key']):
@@ -233,6 +237,7 @@ def build_ca(server_ca, name):
     return ca_cert, ca_key
 
 #   build the Cert certificate
+#   First generate the certificate and then create the certfile + certkey
 def build_cert(config_certificate, ca_cert, ca_key, name):
     cert_req, cert_cert, cert_key = generate_certificate(
         config_certificate, ca_cert, ca_key, name)
@@ -242,14 +247,15 @@ def build_cert(config_certificate, ca_cert, ca_key, name):
         crypto.dump_privatekey(crypto.FILETYPE_PEM, cert_key))
     return cert_cert, cert_key
 
-#   Generates a Diffie-Hellman key and a TLS key
+#   Generates a Diffie-Hellman key using the size of DH_size and a TLS key (ta.key)
 def gen_dh_tlsauth():
     run(['openvpn', '--genkey', '--secret', 'ta.key'])
 
     run(['openssl', 'dhparam', '-out', 'dh' +
          str(DH_SIZE)+'.pem', str(DH_SIZE)])
 
-#   Create Only one file with all the informations in
+#   Create Only one file with all the informations in it.
+#   used to create a unique .ovpn file containing all the CA, Cert, and private keys needed.
 def Create_ovpn(filename):
     with open(filename) as f:
         data = f.read()
@@ -258,7 +264,7 @@ def Create_ovpn(filename):
 #   main function
 if __name__ == "__main__":
 
-#   Building the CA and cert configuration files
+#   Build the dicts needed to create CA and Cert
     config_server_ca, config_server_cert, config_client_ca, config_client_cert = config_creator()
 
 #   Build the Server and Client CA
@@ -275,19 +281,20 @@ if __name__ == "__main__":
     gen_dh_tlsauth()
     print("DH OK")
 
+#   Build the dict containing the OpenVPN configuration files
     server_config_file, client_config_file = config_file_generator()
 
-#   Generate the server configuration file
+#   build the server configuration file (serverVPN.conf)
     with open('serverVPN.conf', 'w') as sc:
         for k, v in server_config_file.items():
             sc.write('{}'.format(k) + ' ' + '{}'.format(v) + '\n')
 
-#   Build the client configuration file
+#   Build the client configuration file (clientVPN.conf)
     with open('clientVPN.conf', 'w') as cc:
         for x, y in client_config_file.items():
             cc.write('{}'.format(x) + ' ' + '{}'.format(y) + '\n')
 
-            #   Gather all server files in one
+#   Gather all CA, Cert, Private keys and conf in one file for the Server
     server_conf = Create_ovpn("serverVPN.conf")
     server_ca = Create_ovpn("server_ca.pem")
     server_cert = Create_ovpn("server_cert.pem")
@@ -295,20 +302,20 @@ if __name__ == "__main__":
     server_ta = Create_ovpn("ta.key")
     server_dh = Create_ovpn("dh"+str(DH_SIZE)+".pem")
 
-#   Gather all client files in one
+#   Gather all CA, Cert, Private keys and conf in one file for the Client
     client_conf = Create_ovpn("clientVPN.conf")
     client_ca = Create_ovpn("client_ca.pem")
     client_cert = Create_ovpn("client_cert.pem")
     client_key = Create_ovpn("client_cert.key")
     client_ta = Create_ovpn("ta.key")
 
-#   Preparing the final server and client file
+#   Fill the .ovpn file with the CA, cert, Private key and conf above.
     server_ovpn = "%s<ca>\n%s</ca>\n<cert>\n%s</cert>\n<key>\n%s</key>\n<dh>\n%s</dh>\n<tls-crypt>\n%s</tls-crypt>" % (
         server_conf, client_ca, server_cert, server_key, server_dh, server_ta)
     client_ovpn = "%s<ca>\n%s</ca>\n<cert>\n%s</cert>\n<key>\n%s</key>\n<tls-crypt>\n%s</tls-crypt>" % (
         client_conf, server_ca, client_cert, client_key, server_ta)
 
-    # write server .ovpn file and client .ovpn file
+    # write server.ovpn file and client.ovpn file
     f = open("server.ovpn", "w")
     f.write(server_ovpn)
     j = open("client.ovpn", "w")
