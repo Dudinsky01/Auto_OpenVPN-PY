@@ -22,6 +22,7 @@ This script is designed to be run on the OpenVPN server. It will create 2 files 
 Leave the server file .ovpn on the server machine and move the client file .ovpn to the client machine. When finished, you will be ask if you want to transfer the client file on the client via scp.
 
 
+
 1.  First check if the configuration file for OpenVPN fits your needs, if not change the values in config_file_generator().
 
     config_file_generator() uses both key and value of the dict to create the configuration file, so be sure of what your doing before    changing them.
