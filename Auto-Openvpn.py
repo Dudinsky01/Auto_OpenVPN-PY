@@ -7,7 +7,7 @@ from OpenSSL import crypto, SSL
 DH_SIZE = 2048
 
 #   Create a default .conf file for OpenVPN
-#   Change [address] and [port] to fit your needs 
+#   Change [remote] and [port] to fit your needs 
 def config_file_generator():
 
     server_conf_file = {}
