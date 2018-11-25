@@ -16,8 +16,7 @@ To install needed python packages, RUN ```pip install pyopenssl```
 
 # How it works
 
-This script is designed to be run on the OpenVPN server. It will create 2 files : the server file .ovpn
-                                                                                  the client file .ovpn
+This script is designed to be run on the OpenVPN server. It will create 2 files : server file .ovpn - client file .ovpn
 
 Leave the server file .ovpn on the server machine and move the client file .ovpn to the client machine. When finished, you will be ask if you want to transfer the client file on the client via scp.
 
