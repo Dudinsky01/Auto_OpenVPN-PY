@@ -3,6 +3,19 @@ import sys
 import subprocess
 from OpenSSL import crypto, SSL
 
+
+# OpenVPN is fairly simple since it works on OpenSSL. The OpenVPN server contains
+# a root certificate authority that can sign sub-certificates. The certificates
+# have very little or no information on who they belong to besides a filename
+# and any required information. Everything else is omitted or blank.
+# The client certificate and private key are inserted into the .ovpn file
+# which contains the OpenVPN settings as well and the entire thing is then ready for
+# the user.
+# EasyRSA generates a standard unsigned certificate, certificate request, and private key.
+# It then signs the certificate against the CA then dumps the certificate request in the trash.
+# The now signed certificate and private key are returned.
+
+
 #   Change this if you want to use a different size for DH_PARAMS
 DH_SIZE = 2048
 
