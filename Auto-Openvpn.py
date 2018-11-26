@@ -268,7 +268,7 @@ def gen_dh_tlsauth():
          str(DH_SIZE)+'.pem', str(DH_SIZE)])
 
 #   Create Only one file with all the informations in it.
-#   used to create a unique .ovpn file containing all the CA, Cert, and private keys needed.
+#   used to create a unique .conf file containing all the CA, Cert, and private keys needed.
 def Create_ovpn(filename):
     with open(filename) as f:
         data = f.read()
@@ -328,13 +328,13 @@ if __name__ == "__main__":
     client_ovpn = "%s<ca>\n%s</ca>\n<cert>\n%s</cert>\n<key>\n%s</key>\n<tls-crypt>\n%s</tls-crypt>" % (
         client_conf, server_ca, client_cert, client_key, server_ta)
 
-#   write server.ovpn file and client.ovpn file
-    f = open("server.ovpn", "w")
+#   write server.conf file and client.conf file
+    f = open("server.conf", "w")
     f.write(server_ovpn)
-    j = open("client.ovpn", "w")
+    j = open("client.conf", "w")
     j.write(client_ovpn)
 
-#   remove all files after .ovpn files created
+#   remove all files after .conf files created
     os.remove("client_ca.key")
     os.remove("client_ca.pem")
     os.remove("client_cert.key")
