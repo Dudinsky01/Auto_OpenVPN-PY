@@ -355,13 +355,20 @@ if __name__ == "__main__":
 
 #   If yes then start scp to client
 #   If no exit
-    if transfer == 'yes':
-        local_user = raw_input("Enter your local username : ")
-        yourip = client_config_file['remote']
-        user = raw_input("Enter server username : ")
+   
+if transfer == 'yes':
         server = server_config_file['remote']
-        os.system("scp" + " " + local_user + "@" + yourip + ":" +
-                  " " + "client.ovpn" + " " + user + "@" + server + ":")
-        if transfer == 'no':
-            sys.exit(0)
+        print(server)
+        user = raw_input("Enter server username: ")
+        ssh = user + "@" + server + ":" 
+        run(['scp', 'client.conf', '%s /etc/openvpn' % ssh])
+
+
+
+    check = raw_input("Do you want to enable the VPN tunnel ?(yes/no)")
+    if check == 'yes':
+        os.system("sudo systemctl enable openvpn@server.service")
+        os.system("ssh " + user + "@" + server + " sudo systemctl enable openvpn@client.service")
+    if check == 'no':
+        sys.exit(0)
     sys.exit(0)
