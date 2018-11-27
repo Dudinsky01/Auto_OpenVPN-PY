@@ -283,29 +283,37 @@ if __name__ == "__main__":
 #   Build the Server and Client CA
     server_ca_cert, server_ca_key = build_ca(config_server_ca, 'Server')
     client_ca_cert, client_ca_key = build_ca(config_client_ca, 'Client')
-    print("CA OK")
+    print("--  CA OK  --")
 
 #   Build the server and client certificate (signed by the above CAs)
     build_cert(config_server_cert, server_ca_cert, server_ca_key, 'Server')
     build_cert(config_client_cert, client_ca_cert, client_ca_key, 'Client')
-    print("CERT OK")
+    print("--  CERT OK  --")
 
 #   Generate Diffie Hellman key and TLS key
     gen_dh_tlsauth()
-    print("DH OK")
+    print("--  DH OK  --\n")
 
 #   Build the dict containing the OpenVPN configuration files
     server_config_file, client_config_file = config_file_generator()
 
 #   build the server configuration file (serverVPN.conf)
-    with open('serverVPN.conf', 'w') as sc:
+     with open('serverVPN.conf', 'w') as sc:
         for k, v in server_config_file.items():
             sc.write('{}'.format(k) + ' ' + '{}'.format(v) + '\n')
+     if os.path.isfile('serverVPN.conf'):
+        print ("--  ServerVPN.conf has been successfuly written  --")
+     else:
+        print ("--  Unexpected error while creating serverVPN.conf file (Do you have the rights ?) --")
 
-#   Build the client configuration file (clientVPN.conf)
+#   Build the client configuration file
     with open('clientVPN.conf', 'w') as cc:
         for x, y in client_config_file.items():
-            cc.write('{}'.format(x) + ' ' + '{}'.format(y) + '\n')
+            cc.write('{}'.format(x) +  ' ' + '{}'.format(y) + '\n')
+    if os.path.isfile('clientVPN.conf'):
+        print ("--  clientVPN.conf has been successfuly written  --\n")
+    else:
+        print ("--  Unexpected error while creating clientVPN.conf file (Do you have the rights ?)  --\n")
 
 #   Gather all CA, Cert, Private keys and conf in one file for the Server
     server_conf = Create_ovpn("serverVPN.conf")
@@ -331,8 +339,19 @@ if __name__ == "__main__":
 #   write server.conf file and client.conf file
     f = open("server.conf", "w")
     f.write(server_ovpn)
+    if os.path.isfile('server.conf'):
+        print ("--  server.conf has been successfuly written  --")
+    else:
+        print ("--  Unexpected error while creating server.conf file (Do you have the rigths ?)  --")
+
+
     j = open("client.conf", "w")
     j.write(client_ovpn)
+    if os.path.isfile('client.conf'):
+        print ("--  client.conf has been successfuly written  --\n")
+    else:
+        print ("--  Unexpected error while creating client.conf file (Do you have the rights ?) --\n")
+
 
 #   remove all files after .conf files created
     os.remove("client_ca.key")
@@ -347,25 +366,22 @@ if __name__ == "__main__":
     os.remove("server_cert.pem")
     os.remove("serverVPN.conf")
     os.remove("ta.key")
-    print("OPENVPN SUCCESFULLY CONFIGURED")
+    print("--  OPENVPN SUCCESFULLY CONFIGURED  --\n")
     
 #   Ask user if they want to use scp to transfer clientfile
     transfer = raw_input(
-        "do you want to transfer the clientfile to client via scp ? (yes/no)")
+        "Do you want to transfer the clientfile to client via scp ? (yes/no)")
 
 #   If yes then start scp to client
 #   If no exit
-   
-if transfer == 'yes':
+    if transfer == 'yes':
         server = server_config_file['remote']
         print(server)
         user = raw_input("Enter server username: ")
         ssh = user + "@" + server + ":" 
         run(['scp', 'client.conf', '%s /etc/openvpn' % ssh])
 
-
-
-    check = raw_input("Do you want to enable the VPN tunnel ?(yes/no)")
+    check = raw_input("Do you want to enable the VPN tunnel when booting ?(yes/no)")
     if check == 'yes':
         os.system("sudo systemctl enable openvpn@server.service")
         os.system("ssh " + user + "@" + server + " sudo systemctl enable openvpn@client.service")
