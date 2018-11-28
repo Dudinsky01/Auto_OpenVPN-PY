@@ -6,39 +6,57 @@ You can use the pre-built configuration file (Site-to-Site VPN) or you can creat
 
 # Installation
 
-OpenSSL is required to generate certificates and OpenVPN is required to create keys.
+- Be sure you have read and write rights in the directory where you are gonna use this script.
 
-Make sure OpenVPN and OpenSSL are both installed before using this script.
+  if not, run ```chown -R <user>: <file>```.
 
-If not run ```apt install openvpn openssl easy-rsa```.
+- In order to access your server via SSH tunnel you need an SSH client correctly configured. We recommand to use SSH key authentification.
 
-To install needed python packages, RUN ```pip install pyopenssl```
+- You must have ```sudo``` and a user in the group ```sudo``` in order to perform the commands in root mode.
+
+  If not, run ```apt install sudo```.
+
+- OpenSSL is required to generate certificates, OpenVPN and Easy-rsa are required to create keys.
+
+  Make sure OpenVPN and OpenSSL are both installed before using this script.
+
+  If not run ```apt install openvpn openssl easy-rsa```.
+
+- PyOpenSSL is needed, to install it, RUN ```pip install pyopenssl```
 
 # How it works
 
-This script is designed to be run on the OpenVPN server. It will create 2 files : server file .ovpn - client file .ovpn
+This script is designed to be run on the OpenVPN server. 
 
-Leave the server file .ovpn on the server machine and move the client file .ovpn to the client machine. When finished, you will be ask if you want to transfer the client file on the client via scp.
+It will create 2 files : server file .conf - client file .conf
+
+Leave the server file on the server machine and move the client file to the client machine. When finished, you will be ask if you want to transfer the client file on the client machine via scp and if you want to enable OpenVPN at boot on the server and via SSH on the client.
 
 
 
 1.  First check if the configuration file for OpenVPN fits your needs, if not change the values in config_file_generator().
 
-    config_file_generator() uses both key and value of the dict to create the configuration file, so be sure of what your doing before    changing them.
+    Change `server_config_file['remote']` and `client_config_file['remote']` with the correct address of your server and client.
+    
+    config_file_generator() uses both key and value of the dict to create the configuration file, so be sure of what your doing before      changing them.
 
 2.  run the script.
 
     It will create all the CA and Cert needed for OpenVPN, create the configuration file, generate a DH key and a tls key.
 
-    At the end you will only have a serverVPN.ovpn and clientVPN.ovpn file.
+    At the end you will only have a serverVPN.conf and clientVPN.conf file.
+    
+3.  You will be asked if you want to transfer the client file on the client machine via scp.
+    Make sure the correct address of your client machine has been changed in server_config_file['remote'].
 
-3.  The serverVPN.ovpn is your server file, so move this one on the concerned server in /etc/openvpn/.
+4.  You will be asked if you want to enable OpenVPN at boot on both machine.
 
-4.  The clientVPN.ovpn is your client file, so move this one on the concerned client in /etc/openvpn/.
+5.  The serverVPN.ovpn is your server file, so move this one on the concerned server in /etc/openvpn/.
 
-    To start the VPN connection run both server and client file using ```openvpn serverVPN.ovpn``` or ```openvpn clientVPN.ovpn```
+6.  The clientVPN.ovpn is your client file, so move this one on the concerned client in /etc/openvpn/.
 
-    If you want OpenVPN to start the connection at every launch use ```systemctl enable openvpn```
+    To start the VPN connection run both server file and client file using ```openvpn serverVPN.conf``` or ```openvpn clientVPN.conf```
+    
 
     Enjoy !
 
