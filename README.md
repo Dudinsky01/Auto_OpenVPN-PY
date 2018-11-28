@@ -55,7 +55,7 @@ Leave the server file on the server machine and move the client file to the clie
 
 6.  The clientVPN.ovpn is your client file, so move this one on the concerned client in /etc/openvpn/.
 
-    To start the VPN connection run both server file and client file using ```openvpn serverVPN.conf``` or ```openvpn clientVPN.conf```
+    To start the VPN connection run on the server machine the client file using ```openvpn serverVPN.conf``` and on the client machine the client file using ```openvpn clientVPN.conf```.
     
 
     Enjoy !
