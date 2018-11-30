@@ -15,7 +15,7 @@ Vous pouvez utilisez la configuration pré-remplis ou créez votre propre config
 - Pour installer les paquets python qui sont nécessaire, Exécutez la commande suivante : ```pip install pyopenssl```
 
 - Disposer d'un accès SSH correctement configuré afin de pouvoir accéder au client depuis le serveur.
-  Il est recommandé d'utiliser l'echange par clés afin de ne pas avoir à rentrer de mot de passe.
+  Il est recommandé d'utiliser l'échange par clés afin de ne pas avoir à rentrer de mot de passe.
   
 - Assurer vous de disposer des droits en lecture et écriture dans le dossier où vous éxecuter le script.
 
