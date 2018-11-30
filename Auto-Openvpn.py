@@ -309,7 +309,7 @@ if __name__ == "__main__":
 #   Build the client configuration file
     with open('clientVPN.conf', 'w') as cc:
         for x, y in client_config_file.items():
-            cc.write('{}'.format(x) +  ' ' + '{}'.format(y) + '\n')
+            cc.write('{}'.format(x) + ' ' + '{}'.format(y) + '\n')
     if os.path.isfile('clientVPN.conf'):
         print ("--  clientVPN.conf has been successfuly written  --\n")
     else:
