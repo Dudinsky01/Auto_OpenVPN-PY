@@ -4,21 +4,28 @@ Auto_OpenVPN a pour but de vous aider à automatiser le processus de création d
 
 Vous pouvez utilisez la configuration pré-remplis ou créez votre propre configuration qui répondra mieux a vos besoins en modifiant les valeurs dans config_file_generator().
 
-# Installation
+# Prérequis
 
-OpenSSL est requis pour générer les certificats et OpenVPN est requis pour générer les clés de sécurité.
+- OpenSSL est requis pour générer les certificats, OpenVPN et Easy-rsa sont requis pour générer les clés de sécurité.
 
-Soyez sûr que OpenVPN et OpenSSL sont installés avant d'utiliser ce script.
+- Soyez sûr que OpenVPN, Easy-rsa et OpenSSL sont installés avant d'utiliser ce script.
 
-Si ce n'est pas le cas, Exécutez la commande suivante : ```apt install openvpn openssl easyrsa```
+- Si ce n'est pas le cas, Exécutez la commande suivante : ```apt install openvpn openssl easy-rsa```
 
-Pour installer les paquets python qui sont nécessaire, Exécutez la commande suivante : ```pip install pyopenssl```
+- Pour installer les paquets python qui sont nécessaire, Exécutez la commande suivante : ```pip install pyopenssl```
+
+- Disposer d'un accès SSH correctement configuré afin de pouvoir accéder au client depuis le serveur.
+  Il est recommandé d'utiliser l'echange par clés afin de ne pas avoir à rentrer de mot de passe.
+  
+- Assurer vous de disposer des droits en lecture et écriture dans le dossier où vous éxecuter le script.
+
+- Diposer de ```sudo```et d'un utilisateur dans le groupe ```sudo``` afin de pouvoir éxecuter des commandes en mode root.
 
 # Comment ca marche ?
 
-Ce script a été conçu pour être lançé depuis la machine qui jouera le role de serveur OpenVPN. Deux fichiers seront crée : fichier server.ovpn - fichier client.ovpn
+Ce script a été conçu pour être lançé depuis la machine qui jouera le role de serveur OpenVPN. Deux fichiers seront crée : fichier server.conf - fichier client.conf
 
-Laissez le fichier server.ovpn sur la machine qui jouera le rôle de serveur et déplacez le fichier client.ovpn sur la machine cliente. À la fin du script, il vous sera demandé si vous souhaitez déplacez le fichier client via scp.
+Laissez le fichier server.conf sur la machine qui jouera le rôle de serveur et déplacez le fichier client.conf sur la machine cliente. À la fin du script, il vous sera demandé si vous souhaitez déplacez le fichier client via scp et si vous souhaitez activer OpenVPN au démarrage de vos machines serveur et client.
 
 
 
@@ -30,15 +37,15 @@ Laissez le fichier server.ovpn sur la machine qui jouera le rôle de serveur et 
 
     Cela créera les CA et Cert nécéssaires pour OpenVPN, les fichiers de configuration pour le server et le client ainsi qu'une clé DH et une clé TLS.
 
-    À la fin du script, vous obtiendrez un fichier serverVPN.ovpn et un fichier clientVPN.ovpn.
+    À la fin du script, vous obtiendrez un fichier serverVPN.conf et un fichier clientVPN.conf.
 
-3.  Le fichier serverVPN.ovpn est votre fichier serveur, déplacé le dans le dossier ```/etc/openvpn/``` sur la machine serveur.
+3.  Le fichier serverVPN.conf est votre fichier serveur, déplacé le dans le dossier ```/etc/openvpn/``` sur la machine serveur.
 
-4.  Le  fichier clientVPN.ovpn est votre fichier client, déplacé le dans le dossier ```/etc/openvpn/``` sur la machine cliente.
+4.  Le  fichier clientVPN.conf est votre fichier client, déplacé le dans le dossier ```/etc/openvpn/``` sur la machine cliente.
 
-    Pour démmarrer la connexion VPN, éxécutez la commande suivante sur le serveur et le client : ```openvpn serverVPN.ovpn``` et ```openvpn clientVPN.ovpn```
+    Pour démmarrer la connexion VPN, éxécutez la commande suivante sur le serveur : ```openvpn serverVPN.conf``` et éxecutez la commande suivante sur le client : ```openvpn clientVPN.conf```.
 
-    Si vous souhaitez démmarrer la connexion VPN à chaques démmarage, éxécutez la commande suivante sur la machine serveur et la machine cliente : ```systemctl enable openvpn```
+    Si vous souhaitez activez la connexion VPN à chaque démmarage, éxécutez la commande suivante sur la machine serveur et la machine cliente : ```systemctl enable openvpn@votrefichier.conf```
 
     Enjoy !
 
