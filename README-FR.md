@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
 # Auto_OpenVPN
 
 Auto_OpenVPN a pour but de vous aider à automatiser le processus de création des fichiers de configuration OpenVPN.
