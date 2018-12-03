@@ -8,7 +8,7 @@ You can use the pre-built configuration file (Site-to-Site VPN) or you can creat
 
 # Installation
 
-- Be sure you have read and write rights in the directory where you are gonna use this script.
+- Be sure you have read and write rights in the directory where you are going to use this script.
 
   if not, run ```chown -R <user>: <file>```.
 
@@ -32,7 +32,7 @@ This script is designed to be run on the OpenVPN server.
 
 It will create 2 files : server file .conf - client file .conf
 
-Leave the server file on the server machine and move the client file to the client machine. When finished, you will be ask if you want to transfer the client file on the client machine via scp and if you want to enable OpenVPN at boot on the server and via SSH on the client.
+Leave the server file on the server machine and move the client file to the client machine. When finished, you will be asked if you want to transfer the client file on the client machine via scp and if you want to enable OpenVPN at boot on the server and via SSH on the client.
 
 
 
@@ -53,9 +53,9 @@ Leave the server file on the server machine and move the client file to the clie
 
 4.  You will be asked if you want to enable OpenVPN at boot on both machine.
 
-5.  The serverVPN.ovpn is your server file, so move this one on the concerned server in /etc/openvpn/.
+5.  The serverVPN.ovpn is your server file, move this one on the concerned server machine in /etc/openvpn/.
 
-6.  The clientVPN.ovpn is your client file, so move this one on the concerned client in /etc/openvpn/.
+6.  The clientVPN.ovpn is your client file, move this one on the concerned client machine in /etc/openvpn/.
 
     To start the VPN connection run on the server machine the client file using ```openvpn serverVPN.conf``` and on the client machine the client file using ```openvpn clientVPN.conf```.
     
