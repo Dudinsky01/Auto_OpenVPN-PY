@@ -26,7 +26,7 @@ def config_file_generator():
     server_conf_file = {}
     client_conf_file = {}
 
-    server_conf_file['remote'] = ("10.0.2.1")
+    server_conf_file['remote'] = ("15.0.2.2")
     server_conf_file['port'] = ("1194")
     server_conf_file['proto'] = ("udp")
     server_conf_file['dev'] = ("tun\n")
@@ -45,7 +45,7 @@ def config_file_generator():
     server_conf_file['group'] = ("nogroup")
     server_conf_file['key-direction'] = ("0")
 
-    client_conf_file['remote'] = ("10.0.1.1")
+    client_conf_file['remote'] = ("15.0.1.2")
     client_conf_file['port'] = ("1194")
     client_conf_file['proto'] = ("udp")
     client_conf_file['dev'] = ("tun")
