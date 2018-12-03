@@ -298,12 +298,12 @@ if __name__ == "__main__":
     server_config_file, client_config_file = config_file_generator()
 
 #   build the server configuration file (serverVPN.conf)
-     with open('serverVPN.conf', 'w') as sc:
+    with open('serverVPN.conf', 'w') as sc:
         for k, v in server_config_file.items():
             sc.write('{}'.format(k) + ' ' + '{}'.format(v) + '\n')
-     if os.path.isfile('serverVPN.conf'):
+    if os.path.isfile('serverVPN.conf'):
         print ("--  ServerVPN.conf has been successfuly written  --")
-     else:
+    else:
         print ("--  Unexpected error while creating serverVPN.conf file (Do you have the rights ?) --")
 
 #   Build the client configuration file
