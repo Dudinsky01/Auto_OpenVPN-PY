@@ -281,13 +281,13 @@ if __name__ == "__main__":
     config_server_ca, config_server_cert, config_client_ca, config_client_cert = config_creator()
 
 #   Build the Server and Client CA
-    server_ca_cert, server_ca_key = build_ca(config_server_ca, 'Server')
-    client_ca_cert, client_ca_key = build_ca(config_client_ca, 'Client')
+    server_ca_cert, server_ca_key = build_ca(config_server_ca, 'server')
+    client_ca_cert, client_ca_key = build_ca(config_client_ca, 'client')
     print("--  CA OK  --")
 
 #   Build the server and client certificate (signed by the above CAs)
-    build_cert(config_server_cert, server_ca_cert, server_ca_key, 'Server')
-    build_cert(config_client_cert, client_ca_cert, client_ca_key, 'Client')
+    build_cert(config_server_cert, server_ca_cert, server_ca_key, 'server')
+    build_cert(config_client_cert, client_ca_cert, client_ca_key, 'client')
     print("--  CERT OK  --")
 
 #   Generate Diffie Hellman key and TLS key
