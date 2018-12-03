@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Generic badge](https://img.shields.io/badge/Python-2.7.X-<COLOR>.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/Python-2.7.X-<COLOR>.svg)](https://www.python.org/download/releases/2.7/)
 
 # Auto_OpenVPN
 
