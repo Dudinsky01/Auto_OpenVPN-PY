@@ -376,7 +376,6 @@ if __name__ == "__main__":
 #   If no exit
     if transfer == 'yes':
         server = server_config_file['remote']
-        print(server)
         user = raw_input("Enter server username: ")
         ssh = user + "@" + server + ":" 
         run(['scp', 'client.conf', '%s /etc/openvpn' % ssh])
