@@ -382,7 +382,9 @@ if __name__ == "__main__":
 
     check = raw_input("Do you want to enable the VPN tunnel when booting ?(yes/no)")
     if check == 'yes':
+        os.system("sudo systemctl enable openvpn")
         os.system("sudo systemctl enable openvpn@server.service")
+        os.system("ssh " + user + "@" + server + " sudo systemctl enable openvpn")
         os.system("ssh " + user + "@" + server + " sudo systemctl enable openvpn@client.service")
     if check == 'no':
         sys.exit(0)
