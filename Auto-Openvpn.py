@@ -78,8 +78,8 @@ def config_creator():
     server_ca['cert_filename'] = "server_ca.pem"
     server_ca['cert_key'] = "server_ca.key"
     server_ca['serial'] = 12345999
-    server_ca['validfrom'] = "20180101000000Z"
-    server_ca['validto'] = "20200101000000Z"
+    server_ca['validfrom'] = "20200101000000Z"
+    server_ca['validto'] = "20240101000000Z"
     server_ca['keyfilesize'] = 4096
     server_ca['hashalgorithm'] = "sha512"
 
@@ -88,8 +88,8 @@ def config_creator():
     server_cert['cert_filename'] = "server_cert.pem"
     server_cert['cert_key'] = "server_cert.key"
     server_cert['serial'] = 12345888
-    server_cert['validfrom'] = "20180101000000Z"
-    server_cert['validto'] = "20200101000000Z"
+    server_cert['validfrom'] = "20200101000000Z"
+    server_cert['validto'] = "20240101000000Z"
     server_cert['keyfilesize'] = 4096
     server_cert['hashalgorithm'] = "sha512"
 
@@ -98,8 +98,8 @@ def config_creator():
     client_ca['cert_filename'] = "client_ca.pem"
     client_ca['cert_key'] = "client_ca.key"
     client_ca['serial'] = 12345777
-    client_ca['validfrom'] = "20180101000000Z"
-    client_ca['validto'] = "20200101000000Z"
+    client_ca['validfrom'] = "20200101000000Z"
+    client_ca['validto'] = "20240101000000Z"
     client_ca['keyfilesize'] = 4096
     client_ca['hashalgorithm'] = "sha512"
 
@@ -108,8 +108,8 @@ def config_creator():
     client_cert['cert_filename'] = "client_cert.pem"
     client_cert['cert_key'] = "client_cert.key"
     client_cert['serial'] = 12345666
-    client_cert['validfrom'] = "20180101000000Z"
-    client_cert['validto'] = "20200101000000Z"
+    client_cert['validfrom'] = "20200101000000Z"
+    client_cert['validto'] = "20240101000000Z"
     client_cert['keyfilesize'] = 4096
     client_cert['hashalgorithm'] = "sha512"
 
